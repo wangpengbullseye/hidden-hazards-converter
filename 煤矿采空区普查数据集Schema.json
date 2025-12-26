@@ -1,0 +1,332 @@
+{
+  "schema_info": {
+    "name": "煤矿采空区隐蔽致灾因素普查数据集标准Schema",
+    "version": "1.0.0",
+    "standard": "KAT 22.2-2024 矿山隐蔽致灾因素普查规范 第2部分：煤矿",
+    "scope": "第5章 采空区普查",
+    "release_date": "2024-12-26",
+    "description": "适用于所有煤矿采空区隐蔽致灾因素普查的通用数据集结构定义",
+    "usage": "本Schema定义了符合KAT 22.2-2024标准的采空区普查数据集结构，适用于井工煤矿"
+  },
+  
+  "naming_conventions": {
+    "mine_code": {
+      "description": "煤矿代码，建议使用拼音首字母或统一编码",
+      "example": "HX001, SB001, WCH001"
+    },
+    "file_naming": {
+      "pattern": "{mine_code}-{table_name}.csv",
+      "example": "HX001-采空区基本信息.csv"
+    },
+    "id_naming": {
+      "mine_id": "{mine_code}",
+      "goaf_id": "{mine_code}-G{序号}",
+      "water_id": "{mine_code}-W{序号}",
+      "gas_id": "{mine_code}-GAS{序号}",
+      "fire_id": "{mine_code}-FIRE{序号}",
+      "roof_id": "{mine_code}-ROOF{序号}",
+      "collapse_id": "{mine_code}-COL{序号}",
+      "crack_id": "{mine_code}-CRACK{序号}",
+      "shaft_id": "{mine_code}-SHAFT{序号}",
+      "seal_id": "{mine_code}-SEAL{序号}",
+      "treatment_project_id": "{mine_code}-PROJ{序号}",
+      "treatment_id": "{mine_code}-TREAT{序号}"
+    }
+  },
+  
+  "tables": [
+    {
+      "table_id": "T01",
+      "table_name": "采空区基本信息",
+      "file_name_pattern": "{mine_code}-采空区基本信息.csv",
+      "standard_ref": "5.1.2 a), 5.8.1 a)",
+      "primary_key": "goaf_id",
+      "description": "采空区形成时间、埋深、位置、面积、采厚、范围、开采煤层、开采方式、采出率、顶板控制方式、煤柱留设等",
+      "fields": [
+        {"name": "mine_id", "type": "string", "required": true, "description": "煤矿ID"},
+        {"name": "mine_name", "type": "string", "required": true, "description": "煤矿名称"},
+        {"name": "goaf_id", "type": "string", "required": true, "description": "采空区ID", "primary_key": true},
+        {"name": "goaf_name", "type": "string", "required": false, "description": "采空区名称"},
+        {"name": "coal_seam", "type": "string", "required": true, "description": "开采煤层"},
+        {"name": "mining_method", "type": "string", "required": false, "description": "开采方式"},
+        {"name": "goaf_area", "type": "decimal", "required": false, "description": "采空区面积", "unit": "m²", "default_unit": "m²"},
+        {"name": "area_unit", "type": "string", "required": false, "description": "面积单位", "default_value": "m²"},
+        {"name": "mining_thickness", "type": "decimal", "required": false, "description": "采厚", "unit": "m", "default_unit": "m"},
+        {"name": "burial_depth", "type": "string", "required": false, "description": "埋深", "unit": "m", "default_unit": "m"},
+        {"name": "mining_start_time", "type": "string", "required": false, "description": "开采开始时间"},
+        {"name": "mining_end_time", "type": "string", "required": false, "description": "开采结束时间"},
+        {"name": "recovery_rate", "type": "decimal", "required": false, "description": "采出率"},
+        {"name": "roof_control_method", "type": "string", "required": false, "description": "顶板控制方式"},
+        {"name": "pillar_setting", "type": "string", "required": false, "description": "煤柱留设情况"},
+        {"name": "water_recharge_source", "type": "string", "required": false, "description": "充水水源"},
+        {"name": "is_adjacent_mine", "type": "boolean", "required": false, "description": "是否为相邻煤矿"},
+        {"name": "relationship", "type": "string", "required": false, "description": "与本矿关系"},
+        {"name": "distance", "type": "string", "required": false, "description": "与本矿距离", "unit": "m", "default_unit": "m"}
+      ],
+      "relationships": [
+        {"target_table": "T02", "type": "1:N", "foreign_key": "goaf_id"},
+        {"target_table": "T03", "type": "1:N", "foreign_key": "goaf_id"}
+      ]
+    },
+
+    {
+      "table_id": "T02",
+      "table_name": "采空区积水信息",
+      "file_name_pattern": "{mine_code}-采空区积水信息.csv",
+      "standard_ref": "5.1.2 c), 5.8.1 b)",
+      "primary_key": "water_id",
+      "foreign_key": "goaf_id",
+      "description": "采空区内积水面积、水位标高、水质、积水量等",
+      "fields": [
+        {"name": "water_id", "type": "string", "required": true, "description": "积水ID", "primary_key": true},
+        {"name": "goaf_id", "type": "string", "required": false, "description": "采空区ID", "foreign_key": true},
+        {"name": "water_number", "type": "string", "required": false, "description": "积水编号"},
+        {"name": "water_type", "type": "string", "required": false, "description": "积水类型"},
+        {"name": "water_area", "type": "decimal", "required": false, "description": "积水面积", "unit": "m²", "default_unit": "m²"},
+        {"name": "water_level", "type": "string", "required": false, "description": "水位标高", "unit": "m", "default_unit": "m"},
+        {"name": "water_volume", "type": "decimal", "required": false, "description": "积水量", "unit": "m³", "default_unit": "m³"},
+        {"name": "water_volume_unit", "type": "string", "required": false, "description": "积水量单位", "default_value": "m³"},
+        {"name": "water_quality", "type": "string", "required": false, "description": "水质"},
+        {"name": "detection_method", "type": "string", "required": false, "description": "探测方法"},
+        {"name": "reliability", "type": "string", "required": false, "description": "可靠性"},
+        {"name": "verification_status", "type": "string", "required": false, "description": "验证状态"},
+        {"name": "verification_result", "type": "string", "required": false, "description": "验证结果"},
+        {"name": "survey_report", "type": "string", "required": false, "description": "勘查报告"},
+        {"name": "survey_date", "type": "string", "required": false, "description": "勘查日期"},
+        {"name": "remarks", "type": "string", "required": false, "description": "备注"}
+      ]
+    },
+    
+    {
+      "table_id": "T03",
+      "table_name": "采空区积气信息",
+      "file_name_pattern": "{mine_code}-采空区积气信息.csv",
+      "standard_ref": "5.1.2 e), 5.8.1 d)",
+      "primary_key": "gas_id",
+      "foreign_key": "goaf_id",
+      "description": "采空区内瓦斯及有毒有害气体成分等",
+      "fields": [
+        {"name": "gas_id", "type": "string", "required": true, "description": "气体记录ID", "primary_key": true},
+        {"name": "goaf_id", "type": "string", "required": false, "description": "采空区ID", "foreign_key": true},
+        {"name": "coal_seam", "type": "string", "required": false, "description": "煤层"},
+        {"name": "monitoring_point", "type": "string", "required": false, "description": "监测点位置"},
+        {"name": "gas_type", "type": "string", "required": true, "description": "气体类型"},
+        {"name": "gas_concentration", "type": "decimal", "required": false, "description": "气体浓度", "unit": "%", "default_unit": "%"},
+        {"name": "concentration_unit", "type": "string", "required": false, "description": "浓度单位", "default_value": "%"},
+        {"name": "monitoring_equipment", "type": "string", "required": false, "description": "监测设备"},
+        {"name": "monitoring_method", "type": "string", "required": false, "description": "监测方法"},
+        {"name": "monitoring_date", "type": "string", "required": false, "description": "监测日期"},
+        {"name": "seal_status", "type": "string", "required": false, "description": "封闭状态"},
+        {"name": "remarks", "type": "string", "required": false, "description": "备注"}
+      ]
+    },
+    
+    {
+      "table_id": "T04",
+      "table_name": "自燃发火信息",
+      "file_name_pattern": "{mine_code}-自燃发火信息.csv",
+      "standard_ref": "5.1.2 d), 5.8.1 c)",
+      "primary_key": "fire_id",
+      "foreign_key": "goaf_id",
+      "description": "采空区内火区位置、范围、温度、气体成分等",
+      "fields": [
+        {"name": "fire_id", "type": "string", "required": true, "description": "火区ID", "primary_key": true},
+        {"name": "goaf_id", "type": "string", "required": false, "description": "采空区ID", "foreign_key": true},
+        {"name": "fire_area", "type": "decimal", "required": false, "description": "火区面积", "unit": "m²", "default_unit": "m²"},
+        {"name": "temperature", "type": "decimal", "required": false, "description": "温度", "unit": "℃", "default_unit": "℃"},
+        {"name": "gas_composition", "type": "string", "required": false, "description": "气体成分"},
+        {"name": "fire_status", "type": "string", "required": false, "description": "发火状态"},
+        {"name": "remarks", "type": "string", "required": false, "description": "备注"}
+      ]
+    },
+    
+    {
+      "table_id": "T05",
+      "table_name": "采空区悬顶信息",
+      "file_name_pattern": "{mine_code}-采空区悬顶信息.csv",
+      "standard_ref": "5.1.2 f), 5.8.1 e)",
+      "primary_key": "roof_id",
+      "foreign_key": "goaf_id",
+      "description": "采空区内顶板垮落情况、悬顶位置及面积等",
+      "fields": [
+        {"name": "roof_id", "type": "string", "required": true, "description": "悬顶记录ID", "primary_key": true},
+        {"name": "goaf_id", "type": "string", "required": false, "description": "采空区ID", "foreign_key": true},
+        {"name": "suspended_roof_area_id", "type": "string", "required": false, "description": "悬顶区域ID"},
+        {"name": "roof_number", "type": "string", "required": false, "description": "悬顶编号"},
+        {"name": "has_suspended_roof", "type": "boolean", "required": false, "description": "是否悬顶"},
+        {"name": "suspended_area", "type": "decimal", "required": false, "description": "悬顶面积", "unit": "m²", "default_unit": "m²"},
+        {"name": "collapse_status", "type": "string", "required": false, "description": "垮落状态"},
+        {"name": "remarks", "type": "string", "required": false, "description": "备注"}
+      ]
+    },
+
+    {
+      "table_id": "T06",
+      "table_name": "采空区塌陷信息",
+      "file_name_pattern": "{mine_code}-采空区塌陷信息.csv",
+      "standard_ref": "5.1.2 f), 5.8.1 e)",
+      "primary_key": "collapse_id",
+      "foreign_key": "goaf_id",
+      "description": "采空区地表塌陷情况",
+      "fields": [
+        {"name": "collapse_id", "type": "string", "required": true, "description": "塌陷ID", "primary_key": true},
+        {"name": "goaf_id", "type": "string", "required": false, "description": "采空区ID", "foreign_key": true},
+        {"name": "collapse_area", "type": "decimal", "required": false, "description": "塌陷面积", "unit": "m²", "default_unit": "m²"},
+        {"name": "collapse_depth", "type": "decimal", "required": false, "description": "塌陷深度", "unit": "m", "default_unit": "m"},
+        {"name": "remarks", "type": "string", "required": false, "description": "备注"}
+      ]
+    },
+
+    {
+      "table_id": "T07",
+      "table_name": "地裂缝信息",
+      "file_name_pattern": "{mine_code}-地裂缝信息.csv",
+      "standard_ref": "5.1.2 g), 5.8.1 f)",
+      "primary_key": "crack_id",
+      "foreign_key": "goaf_id",
+      "description": "采空区地表塌陷裂缝位置、深度、长度、宽度、延展方向、导水漏风情况等",
+      "fields": [
+        {"name": "crack_id", "type": "string", "required": true, "description": "裂缝ID", "primary_key": true},
+        {"name": "goaf_id", "type": "string", "required": false, "description": "采空区ID", "foreign_key": true},
+        {"name": "crack_location", "type": "string", "required": false, "description": "裂缝位置"},
+        {"name": "discovery_date", "type": "string", "required": false, "description": "发现时间"},
+        {"name": "crack_length", "type": "decimal", "required": false, "description": "长度", "unit": "m", "default_unit": "m"},
+        {"name": "crack_width", "type": "decimal", "required": false, "description": "宽度", "unit": "m", "default_unit": "m"},
+        {"name": "crack_depth", "type": "decimal", "required": false, "description": "深度", "unit": "m", "default_unit": "m"},
+        {"name": "extension_direction", "type": "string", "required": false, "description": "延展方向"},
+        {"name": "water_conductivity", "type": "boolean", "required": false, "description": "导水情况"},
+        {"name": "air_leakage", "type": "boolean", "required": false, "description": "漏风情况"},
+        {"name": "treatment_date", "type": "string", "required": false, "description": "治理日期"},
+        {"name": "treatment_method", "type": "string", "required": false, "description": "治理方式"},
+        {"name": "remarks", "type": "string", "required": false, "description": "备注"}
+      ]
+    },
+
+    {
+      "table_id": "T08",
+      "table_name": "废弃井筒信息",
+      "file_name_pattern": "{mine_code}-废弃井筒信息.csv",
+      "standard_ref": "5.1.2 b), 5.8.1 h)",
+      "primary_key": "shaft_id",
+      "foreign_key": "goaf_id",
+      "description": "废弃井筒形式、井口位置、井口标高、井筒结构、断面尺寸、井深/延伸方向、封闭方法、封闭材料、封闭质量等",
+      "fields": [
+        {"name": "shaft_id", "type": "string", "required": true, "description": "井筒ID", "primary_key": true},
+        {"name": "goaf_id", "type": "string", "required": false, "description": "采空区ID", "foreign_key": true},
+        {"name": "shaft_name", "type": "string", "required": false, "description": "井筒名称"},
+        {"name": "shaft_type", "type": "string", "required": false, "description": "井筒类型"},
+        {"name": "coordinate_x", "type": "decimal", "required": false, "description": "井口坐标X", "unit": "m", "default_unit": "m"},
+        {"name": "coordinate_y", "type": "decimal", "required": false, "description": "井口坐标Y", "unit": "m", "default_unit": "m"},
+        {"name": "elevation", "type": "decimal", "required": false, "description": "井口标高", "unit": "m", "default_unit": "m"},
+        {"name": "coal_seam", "type": "string", "required": false, "description": "连通煤层"},
+        {"name": "shaft_diameter", "type": "decimal", "required": false, "description": "井筒直径", "unit": "m", "default_unit": "m"},
+        {"name": "shaft_depth", "type": "decimal", "required": false, "description": "井深", "unit": "m", "default_unit": "m"},
+        {"name": "seal_status", "type": "string", "required": false, "description": "封闭状态"},
+        {"name": "seal_date", "type": "string", "required": false, "description": "封闭时间"},
+        {"name": "seal_method", "type": "string", "required": false, "description": "封闭方法"},
+        {"name": "seal_material", "type": "string", "required": false, "description": "封闭材料"},
+        {"name": "seal_thickness", "type": "string", "required": false, "description": "封闭厚度", "unit": "m", "default_unit": "m"},
+        {"name": "position_relationship", "type": "string", "required": false, "description": "位置关系"},
+        {"name": "water_connection", "type": "string", "required": false, "description": "水力联系"},
+        {"name": "hazard", "type": "string", "required": false, "description": "危险性"},
+        {"name": "remarks", "type": "string", "required": false, "description": "备注"}
+      ]
+    },
+
+    {
+      "table_id": "T09",
+      "table_name": "密闭墙信息",
+      "file_name_pattern": "{mine_code}-密闭墙信息.csv",
+      "standard_ref": "5.8.1 g)",
+      "primary_key": "seal_id",
+      "foreign_key": "goaf_id",
+      "description": "采空区密闭分布位置、规格情况、墙体及周边完整程度、漏风返水情况等",
+      "fields": [
+        {"name": "seal_id", "type": "string", "required": true, "description": "密闭墙ID", "primary_key": true},
+        {"name": "goaf_id", "type": "string", "required": false, "description": "采空区ID", "foreign_key": true},
+        {"name": "coal_seam", "type": "string", "required": false, "description": "煤层"},
+        {"name": "seal_number", "type": "string", "required": false, "description": "密闭编号"},
+        {"name": "seal_name", "type": "string", "required": false, "description": "密闭名称"},
+        {"name": "location", "type": "string", "required": false, "description": "位置"},
+        {"name": "purpose", "type": "string", "required": false, "description": "用途"},
+        {"name": "construction_date", "type": "string", "required": false, "description": "构筑时间"},
+        {"name": "construction_unit", "type": "string", "required": false, "description": "施工单位"},
+        {"name": "structure", "type": "string", "required": false, "description": "密闭结构"},
+        {"name": "groove_depth", "type": "string", "required": false, "description": "掏槽深度", "unit": "m", "default_unit": "m"},
+        {"name": "status", "type": "string", "required": false, "description": "目前状态"},
+        {"name": "acceptance_status", "type": "string", "required": false, "description": "验收状态"},
+        {"name": "remarks", "type": "string", "required": false, "description": "备注"}
+      ]
+    },
+
+    {
+      "table_id": "T10",
+      "table_name": "采空区治理信息",
+      "file_name_pattern": "{mine_code}-采空区治理信息.csv",
+      "standard_ref": "采空区治理工程",
+      "primary_key": "treatment_id",
+      "foreign_key": "goaf_id",
+      "description": "采空区治理工程信息，支持一个工程多种材料的记录方式",
+      "fields": [
+        {"name": "treatment_project_id", "type": "string", "required": true, "description": "治理工程ID"},
+        {"name": "treatment_id", "type": "string", "required": true, "description": "治理记录ID", "primary_key": true},
+        {"name": "goaf_id", "type": "string", "required": false, "description": "采空区ID", "foreign_key": true},
+        {"name": "coal_seam", "type": "string", "required": false, "description": "煤层"},
+        {"name": "treatment_area", "type": "string", "required": false, "description": "治理区域"},
+        {"name": "treatment_method", "type": "string", "required": false, "description": "治理方法"},
+        {"name": "treatment_material", "type": "string", "required": false, "description": "治理材料"},
+        {"name": "treatment_volume", "type": "decimal", "required": false, "description": "治理量", "unit": "m³", "default_unit": "m³"},
+        {"name": "volume_unit", "type": "string", "required": false, "description": "治理量单位", "default_value": "m³"},
+        {"name": "construction_unit", "type": "string", "required": false, "description": "施工单位"},
+        {"name": "start_date", "type": "string", "required": false, "description": "开始日期"},
+        {"name": "completion_date", "type": "string", "required": false, "description": "完成日期"},
+        {"name": "treatment_status", "type": "string", "required": false, "description": "治理状态"},
+        {"name": "remarks", "type": "string", "required": false, "description": "备注"}
+      ]
+    }
+  ],
+
+  "special_features": {
+    "adjacent_mines": {
+      "description": "支持周边煤矿采空区数据",
+      "implementation": "通过is_adjacent_mine字段标识，relationship字段描述关系（越界开采/相邻/巷道联通）"
+    },
+    "multi_goaf_suspended_roof": {
+      "description": "支持多个采空区共享一个悬顶区域",
+      "implementation": "通过suspended_roof_area_id字段关联，相同ID表示同一个悬顶区域"
+    },
+    "multi_material_treatment": {
+      "description": "支持一个治理工程使用多种材料",
+      "implementation": "通过treatment_project_id分组，每种材料一条treatment_id记录"
+    },
+    "flexible_goaf_association": {
+      "description": "支持灵活的采空区关联",
+      "implementation": "goaf_id可为空，通过coal_seam等字段描述"
+    }
+  },
+
+  "validation_rules": {
+    "required_fields": [
+      "mine_id", "mine_name", "goaf_id (基本信息表)",
+      "各表主键字段必填"
+    ],
+    "data_types": {
+      "decimal": "面积、体积、浓度等数值",
+      "string": "名称、描述、状态等文本",
+      "boolean": "是否类型字段"
+    },
+    "referential_integrity": {
+      "description": "外键goaf_id应引用采空区基本信息表",
+      "note": "允许为空以支持灵活的数据记录"
+    }
+  },
+
+  "usage_notes": {
+    "encoding": "UTF-8编码，确保中文正常显示",
+    "csv_format": "标准CSV格式，逗号分隔，字段名作为第一行",
+    "null_values": "空值使用空字符串表示",
+    "multi_value_separator": "多值字段使用+号分隔（如coal_seam: 3-1+5-2）",
+    "desensitization": "敏感数据可使用￥符号包裹进行脱敏"
+  }
+}
+
