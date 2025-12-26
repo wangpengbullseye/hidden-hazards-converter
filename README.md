@@ -29,8 +29,8 @@ ToDataJson是一个完整的煤矿采空区数据集转换和验证工具包，�
 - `requirements.txt` - Python依赖 ⭐新增
 
 ### 测试数据
-- `河西联办煤矿-采空区基本信息.csv`
-- `河西联办煤矿-采空区积水信息.csv`
+- `TEST煤矿-采空区基本信息.csv`
+- `TEST煤矿-采空区积水信息.csv`
 - ... (共10个CSV文件)
 
 ---
@@ -54,10 +54,10 @@ streamlit run app.py
 
 ```bash
 # 转换数据
-python ToJson.py 河西联办煤矿
+python ToJson.py TEST煤矿
 
 # 验证数据
-python Validator.py 河西联办煤矿
+python Validator.py TEST煤矿
 
 # 运行测试
 python test.py
@@ -78,14 +78,14 @@ python test.py
 
 **输入**: 10个CSV文件
 ```
-河西联办煤矿-采空区基本信息.csv
-河西联办煤矿-采空区积水信息.csv
+TEST煤矿-采空区基本信息.csv
+TEST煤矿-采空区积水信息.csv
 ...
 ```
 
 **输出**: 1个JSON文件
 ```
-河西联办煤矿-采空区数据集.json
+TEST煤矿-采空区数据集.json
 ```
 
 ### 2. Validator - 数据验证
@@ -98,7 +98,7 @@ python test.py
 
 **输出**: 验证报告
 ```
-河西联办煤矿-验证报告.txt
+TEST煤矿-验证报告.txt
 ```
 
 ### 3. test - 单元测试
@@ -137,7 +137,7 @@ python test.py
 {
   "mine_info": {
     "mine_id": "HX001",
-    "mine_name": "河西联办煤矿",
+    "mine_name": "TEST煤矿",
     "standard": "KAT 22.2-2024"
   },
   "statistics": {
@@ -161,37 +161,33 @@ python test.py
 
 ```bash
 # 1. 准备CSV文件
-河西联办煤矿-采空区基本信息.csv
-河西联办煤矿-采空区积水信息.csv
+TEST煤矿-采空区基本信息.csv
+TEST煤矿-采空区积水信息.csv
 ...
 
 # 2. 转换
-python ToJson.py 河西联办煤矿
+python ToJson.py TEST煤矿
 
 # 3. 验证
-python Validator.py 河西联办煤矿
+python Validator.py TEST煤矿
 
 # 4. 查看结果
-河西联办煤矿-采空区数据集.json
-河西联办煤矿-验证报告.txt
+TEST煤矿-采空区数据集.json
+TEST煤矿-验证报告.txt
 ```
 
 ### 示例2: 批量转换
 
 ```bash
 # 1. 准备多个煤矿的CSV文件
-河西联办煤矿-*.csv
-盛博煤矿-*.csv
-王才伙盘煤矿-*.csv
+TEST煤矿-*.csv
 
 # 2. 批量转换
 python ToJson.py
 
 # 3. 查看结果
 json_output/
-├── 河西联办煤矿-采空区数据集.json
-├── 盛博煤矿-采空区数据集.json
-└── 王才伙盘煤矿-采空区数据集.json
+└── TEST煤矿-采空区数据集.json
 ```
 
 ### 示例3: Python代码调用
@@ -202,11 +198,11 @@ from Validator import Validator
 
 # 转换
 converter = ToJson()
-converter.convert_mine("河西联办煤矿", "output.json")
+converter.convert_mine("TEST煤矿", "output.json")
 
 # 验证
 validator = Validator()
-result = validator.compare_csv_json("河西联办煤矿", "output.json")
+result = validator.compare_csv_json("TEST煤矿", "output.json")
 print(f"转换正确: {result['match']}")
 ```
 

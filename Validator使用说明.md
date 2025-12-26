@@ -22,7 +22,7 @@ python Validator.py <煤矿名称>
 ### 示例
 
 ```bash
-python Validator.py 河西联办煤矿
+python Validator.py TEST煤矿
 ```
 
 ---
@@ -39,7 +39,7 @@ python Validator.py 河西联办煤矿
 
 **输出示例**:
 ```
-📋 验证CSV文件: 河西联办煤矿
+📋 验证CSV文件: TEST煤矿
 ================================================================================
   ✅ 采空区基本信息: 29条记录, 19个字段
   ✅ 采空区积水信息: 9条记录, 16个字段
@@ -59,7 +59,7 @@ python Validator.py 河西联办煤矿
 
 **输出示例**:
 ```
-📋 验证JSON文件: 河西联办煤矿-采空区数据集.json
+📋 验证JSON文件: TEST煤矿-采空区数据集.json
 ================================================================================
   ✅ 采空区基本信息: 29条记录
   ✅ 采空区积水信息: 9条记录
@@ -75,7 +75,7 @@ python Validator.py 河西联办煤矿
 
 **输出示例**:
 ```
-🔍 比对CSV与JSON: 河西联办煤矿
+🔍 比对CSV与JSON: TEST煤矿
 ================================================================================
   ✅ 采空区基本信息: CSV=29, JSON=29
   ✅ 采空区积水信息: CSV=9, JSON=9
@@ -118,7 +118,7 @@ python Validator.py 河西联办煤矿
 
 📋 CSV文件验证
 --------------------------------------------------------------------------------
-煤矿: 河西联办煤矿
+煤矿: TEST煤矿
 找到表: 10/10
 总记录数: 255
 警告: 7个
@@ -127,7 +127,7 @@ python Validator.py 河西联办煤矿
 
 📋 JSON文件验证
 --------------------------------------------------------------------------------
-文件: 河西联办煤矿-采空区数据集.json
+文件: TEST煤矿-采空区数据集.json
 有效: ✅ 是
 总记录数: 255
 
@@ -152,7 +152,7 @@ python Validator.py 河西联办煤矿
 
 ```bash
 # 检查CSV文件是否符合Schema
-python Validator.py 河西联办煤矿
+python Validator.py TEST煤矿
 ```
 
 **用途**: 
@@ -164,10 +164,10 @@ python Validator.py 河西联办煤矿
 
 ```bash
 # 1. 转换
-python ToJson.py 河西联办煤矿
+python ToJson.py TEST煤矿
 
 # 2. 验证
-python Validator.py 河西联办煤矿
+python Validator.py TEST煤矿
 ```
 
 **用途**:
@@ -179,9 +179,7 @@ python Validator.py 河西联办煤矿
 
 ```bash
 # 验证多个煤矿
-python Validator.py 河西联办煤矿
-python Validator.py 盛博煤矿
-python Validator.py 王才伙盘煤矿
+python Validator.py TEST煤矿
 ```
 
 ---
@@ -236,7 +234,7 @@ python Validator.py 王才伙盘煤矿
 from Validator import Validator
 
 validator = Validator()
-result = validator.validate_csv("河西联办煤矿")
+result = validator.validate_csv("TEST煤矿")
 
 print(f"找到表: {result['found_tables']}/10")
 print(f"总记录数: {result['total_records']}")
@@ -246,7 +244,7 @@ print(f"总记录数: {result['total_records']}")
 
 ```python
 validator = Validator()
-result = validator.validate_json("河西联办煤矿-采空区数据集.json")
+result = validator.validate_json("TEST煤矿-采空区数据集.json")
 
 print(f"有效: {result['valid']}")
 print(f"总记录数: {result['total_records']}")
@@ -257,8 +255,8 @@ print(f"总记录数: {result['total_records']}")
 ```python
 validator = Validator()
 result = validator.compare_csv_json(
-    "河西联办煤矿",
-    "河西联办煤矿-采空区数据集.json"
+    "TEST煤矿",
+    "TEST煤矿-采空区数据集.json"
 )
 
 print(f"转换正确: {result['match']}")
@@ -270,15 +268,15 @@ print(f"转换正确: {result['match']}")
 validator = Validator()
 
 # 验证CSV
-csv_result = validator.validate_csv("河西联办煤矿")
+csv_result = validator.validate_csv("TEST煤矿")
 
 # 验证JSON
-json_result = validator.validate_json("河西联办煤矿-采空区数据集.json")
+json_result = validator.validate_json("TEST煤矿-采空区数据集.json")
 
 # 比对
 compare_result = validator.compare_csv_json(
-    "河西联办煤矿",
-    "河西联办煤矿-采空区数据集.json"
+    "TEST煤矿",
+    "TEST煤矿-采空区数据集.json"
 )
 
 # 生成报告
@@ -304,21 +302,21 @@ print(report)
 
 ```bash
 # 1. 准备CSV文件
-河西联办煤矿-采空区基本信息.csv
-河西联办煤矿-采空区积水信息.csv
+TEST煤矿-采空区基本信息.csv
+TEST煤矿-采空区积水信息.csv
 ...
 
 # 2. 验证CSV（可选）
-python Validator.py 河西联办煤矿
+python Validator.py TEST煤矿
 
 # 3. 转换为JSON
-python ToJson.py 河西联办煤矿
+python ToJson.py TEST煤矿
 
 # 4. 验证转换结果
-python Validator.py 河西联办煤矿
+python Validator.py TEST煤矿
 
 # 5. 检查报告
-cat 河西联办煤矿-验证报告.txt
+cat TEST煤矿-验证报告.txt
 ```
 
 ### 质量保证

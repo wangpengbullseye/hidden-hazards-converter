@@ -1,0 +1,4 @@
+shaft_id,goaf_id,shaft_name,shaft_type,coordinate_x,coordinate_y,elevation,coal_seam,shaft_diameter,shaft_depth,seal_status,seal_date,seal_method,seal_material,seal_thickness,position_relationship,water_connection,hazard,remarks
+HX001-SHAFT001,HX001-G001,原主斜井,斜井,￥105￥,￥103￥,￥101￥,3-1,,,封孔不详,￥8￥年,不详,不详,,3-1煤层无规划的工作面-距4-3东翼大巷回采工作面垂直高度差为￥99￥m左右-平面距离￥98￥m,距离北部的考生乌素沟￥96￥m-存接收地表大气降水补给和考考乌素沟冲洪积层潜水补给,3-1煤层房柱式采空区积水积气情况不清,位于现今工业广场混凝土硬化层之下-封闭材料结构不详
+HX001-SHAFT002,HX001-G001,原回风平硐,平硐,￥104￥,￥102￥,￥100￥,3-1,,,完全封闭,￥7￥年￥6￥月￥5￥日,混凝土浇筑,混凝土,￥4￥m,废弃井筒地表处距离3-1煤层约￥27￥m-平面距离约￥97￥m,距离北部的考考乌素沟￥95￥m,3-1煤层房柱式采空区积水积气情况不清,￥7￥年之前当水源井利用-￥7￥年￥6￥月￥5￥日再次封闭-井口已封闭恢复地貌
+

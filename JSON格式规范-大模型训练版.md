@@ -31,7 +31,7 @@
 {
   "mine_info": {
     "mine_id": "HX001",
-    "mine_name": "河西联办煤矿",
+    "mine_name": "TEST煤矿",
     "survey_date": "2024年",
     "standard": "KAT 22.2-2024",
     "data_version": "1.0.0"
@@ -54,7 +54,7 @@
     "goaf_basic_info": [
       {
         "mine_id": "HX001",
-        "mine_name": "河西联办煤矿",
+        "mine_name": "TEST煤矿",
         "goaf_id": "HX001-G001",
         "goaf_name": "采空1",
         "coal_seam": "3-1",
@@ -185,7 +185,7 @@ test_mines = ["XXX001", ...]           # 15%
 
 **任务1: 信息抽取**
 ```
-输入: 河西联办煤矿的采空区基本信息
+输入: TEST煤矿的采空区基本信息
 输出: 提取采空区数量、煤层、开采方式等
 ```
 
